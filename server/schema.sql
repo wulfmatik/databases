@@ -14,9 +14,7 @@ CREATE TABLE messages (
   username varchar(20),
   messageText text NOT NULL,
   roomname text null,
-  userID integer,
-  primary key (id),
-  foreign key (userID) references users(id)
+  primary key (id)
 );
 
 

@@ -2,14 +2,19 @@ var models = require('../models');
 
 module.exports = {
   get: function (req, res) {
-    var promise = models.users.getAll;
-    promise.then((data) => {
-      res.send(data);
+    models.users.getAll((err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.send(JSON.stringify(result));
     });
   },
   post: function (req, res) {
-    models.users.create(req.body).then((data) => {
-      res.send(data);
+    models.users.create(req.body, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      res.send(result);
     });
 
   } // a function which handles posting a message to the database
