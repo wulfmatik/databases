@@ -30,7 +30,7 @@ describe('Persistent Node Chat Server', () => {
   });
 
   it('Should insert posted messages to the DB', (done) => {
-    const username = 'Valjean';
+    const username = 'Peter';
     const message = 'In mercy\'s name, three days is all I need.';
     const roomname = 'Hello';
     // Create a user on the chat server database.
@@ -94,7 +94,7 @@ describe('Persistent Node Chat Server', () => {
 
   it('Should insert user names into DB when messages are posted', (done) => {
     const username = 'Valjean';
-    const message = 'In mercy\'s name, three days is all I need.';
+    const message = 'I love Thailand.';
     const roomname = 'Hello';
     // Create a user on the chat server database.
     axios.post(`${API_URL}/users`, { username })
@@ -118,7 +118,7 @@ describe('Persistent Node Chat Server', () => {
           expect(results.length).toEqual(2);
 
           // TODO: If you don't have a column named text, change this test.
-          expect(results[0].username).toEqual(username);
+          expect(results[1].username).toEqual(username);
           done();
         });
       })
@@ -145,6 +145,61 @@ describe('Persistent Node Chat Server', () => {
       axios.get(`${API_URL}/users`)
         .then((response) => {
           const messageLog = response.data;
+          expect(messageLog[1].username).toEqual(username);
+          done();
+        })
+        .catch((err) => {
+          throw err;
+        });
+    });
+  });
+
+  it('Should output all roomnames from the DB', (done) => {
+    const username = 'Peter';
+    const message = 'I love Thailand.';
+    const roomname = 'Hello';
+    // Let's insert a message into the db
+    const queryString = 'select roomname from messages;';
+    const queryArgs = [];
+    /* TODO: The exact query string and query args to use here
+     * depend on the schema you design, so I'll leave them up to you. */
+    dbConnection.query(queryString, queryArgs, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      // Now query the Node chat server and see if it returns the message we just inserted:
+      axios.get(`${API_URL}/messages`)
+        .then((response) => {
+          const messageLog = response.data;
+          expect(messageLog[0].roomname).toEqual(roomname);
+          done();
+        })
+        .catch((err) => {
+          throw err;
+        });
+    });
+  });
+
+  it('Should output selected user from the DB', (done) => {
+    const username = 'Peter';
+    const message = 'In mercy\'s name, three days is all I need.';
+    const roomname = 'Hello';
+    // Let's insert a message into the db
+    const queryString = 'select username from users;';
+    const queryArgs = [];
+    /* TODO: The exact query string and query args to use here
+     * depend on the schema you design, so I'll leave them up to you. */
+    dbConnection.query(queryString, queryArgs, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      // Now query the Node chat server and see if it returns the message we just inserted:
+      axios.get(`${API_URL}/users`)
+        .then((response) => {
+          const messageLog = response.data;
+          console.log(messageLog);
           expect(messageLog[0].username).toEqual(username);
           done();
         })
@@ -153,4 +208,5 @@ describe('Persistent Node Chat Server', () => {
         });
     });
   });
+
 });
