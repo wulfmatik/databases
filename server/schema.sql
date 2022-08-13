@@ -8,6 +8,7 @@ CREATE TABLE users (
   primary key (id)
 );
 
+
 CREATE TABLE messages (
   id integer auto_increment,
   username varchar(20),
@@ -17,6 +18,8 @@ CREATE TABLE messages (
   primary key (id),
   foreign key (userID) references users(id)
 );
+
+
 
 
 /*  Execute this file from the command line by typing:

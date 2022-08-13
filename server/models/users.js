@@ -11,3 +11,4 @@ module.exports = {
     return db.promise().query(newQuery, [username]);
   }
 };
+
