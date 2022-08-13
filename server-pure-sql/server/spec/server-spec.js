@@ -52,6 +52,7 @@ describe('Persistent Node Chat Server', () => {
             throw err;
           }
           // Should have one result:
+          console.log('messages table: ', results);
           expect(results.length).toEqual(1);
 
           // TODO: If you don't have a column named text, change this test.
@@ -115,6 +116,7 @@ describe('Persistent Node Chat Server', () => {
             throw err;
           }
           // Should have one result:
+          console.log(results);
           expect(results.length).toEqual(2);
 
           // TODO: If you don't have a column named text, change this test.

@@ -12,7 +12,6 @@ module.exports = {
 
   },
   post: function (req, res) {
-    //console.log(req.body)
     models.messages.create(req.body, (err, result) => {
       if (err) {
         throw err;
@@ -20,6 +19,6 @@ module.exports = {
       res.send(result);
     });
 
-  }
+  } // a function which handles posting a message to the database
 };
 
